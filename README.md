@@ -4,4 +4,10 @@ PWA estática preparada para GitHub Pages.
 
 La aplicación guarda el estado localmente en el dispositivo y ofrece respaldos JSON desde **⚙ Datos y respaldo**.
 
-Este repositorio se está preparando automáticamente para la primera Release Candidate.
+## Publicar la RC1
+
+1. Sube a la raíz del repositorio el archivo `MULTIVERSE-v1.80-RC1-PWA.zip` sin cambiarle el nombre.
+2. En **Settings → Pages → Build and deployment → Source**, selecciona **GitHub Actions**.
+3. El workflow `Deploy MULTIVERSE PWA` descomprime y publica automáticamente la aplicación.
+
+Cuando termine el deployment, la PWA quedará disponible en GitHub Pages y podrá instalarse desde Safari/Chrome.
