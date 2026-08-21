@@ -28,6 +28,21 @@ jobs:
           mkdir -p site
           if [ -f MULTIVERSE-v1.80-RC1-PWA.zip ]; then
             unzip -q MULTIVERSE-v1.80-RC1-PWA.zip -d site
+            python - <<'PY'
+          from pathlib import Path
+          p=Path('site/index.html')
+          s=p.read_text(encoding='utf-8')
+          old='const tags = new Set(); const traits = new Set(d.extra_traits||[]);'
+          new='const tags = new Set([...(d.tags||[]), ...(d.extra_tags||[])]); const traits = new Set([...(d.traits||[]), ...(d.extra_traits||[])]);'
+          if old in s:
+              s=s.replace(old,new,1)
+          s=s.replace('const APP_VERSION = "v1.80 RC1";','const APP_VERSION = "v1.80 RC2";',1)
+          p.write_text(s,encoding='utf-8')
+          sw=Path('site/sw.js')
+          if sw.exists():
+              t=sw.read_text(encoding='utf-8').replace('multiverse-v1.80-rc1','multiverse-v1.80-rc2',1)
+              sw.write_text(t,encoding='utf-8')
+          PY
           else
             cat > site/index.html <<'HTML'
           <!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#0a0a0d;color:#efe6cd;font:18px system-ui;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}b{color:#ffcf4d}</style><body><div><b>MULTIVERSE</b><br><br>Repositorio preparado.<br>Falta subir <code>MULTIVERSE-v1.80-RC1-PWA.zip</code>.</div></body></html>
